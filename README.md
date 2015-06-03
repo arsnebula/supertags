@@ -1,17 +1,17 @@
 # SuperTags for Meteor [![Build Status](https://api.shippable.com/projects/54dc4e2c5ab6cc13528bacdb/badge?branchName=master)](https://app.shippable.com/projects/54dc4e2c5ab6cc13528bacdb/builds/latest)
 
-Tagging package for both javascript objects and mongo documents.
+Tagging package for both JavaScript objects and Mongo documents.
 
 ## About SuperTags
 
-SuperTags allows for easy tagging of in memory objects and mongo documents. Some of the features include:
+SuperTags allows for easy tagging of in-memory objects and Mongo documents. Some of the features include:
 
 * Manage multiple tags/labels at once
-* Parsing 'tokenized' tags from any text field or object
-* Applying tags to an object in memory
-* Add/Remove tags from documents in MongoDB
+* Parse 'tokenized' tags from any text field or object
+* Apply tags to an object in memory
+* Add/remove tags from documents in MongoDB
 * Enable auto-complete for existing tags
-* Link/Highlight tags within text
+* Link/highlight tags within text
 
 ## Current Version
 **v0.2.0**
@@ -24,15 +24,15 @@ SuperTags comes with various options and configurations for a few tagging scenar
 
 ```js
 var settings = {
-  inputTemplate: 'blazeTemplateName', //Blaze template to attach events and helpers
-  inputControl: 'divIdForInput' //Div Id for tag input
+  inputTemplate: 'blazeTemplateName',  // Blaze template to attach events and helpers
+  inputControl: 'divIdForInput'  // div Id for tag input
 }
 var sTags = new SuperTags.Activate(settings);
 ```
 
 ```html
 <template name="blazeTemplateName">
-  <div id="divIdForInput" style="width:100%;height:100px;border:1px solid black;"></div>
+  <div id="divIdForInput" style="width: 100%; height: 100px; border: 1px solid black"></div>
 </template>
 ```
 
@@ -48,8 +48,8 @@ This will result in an array of tags added in to the `divIdForInput` div.
 
 ```js
 var settings = {
-  inputTemplate: 'blazeTemplateName', //Blaze template to attach events and helpers
-  inputControl: 'divIdForInput', //Div Id for tag input
+  inputTemplate: 'blazeTemplateName',  // Blaze template to attach events and helpers
+  inputControl: 'divIdForInput',  // div Id for tag input
   tagMode: 'inline',
   availableTags: [{
     label: 'hashtags',
@@ -62,14 +62,14 @@ var sTags = new SuperTags.Activate(settings);
 The user can now add tags directly in the text using hashtags. SuperTags supports any number of lables and tokens. To get the tags from the field:
 
 ```js
-var userTags = sTags.getTags()
+var userTags = sTags.getTags();
 ```
 
-This will result in an array for each set of labels provided in the `availbleTags` object array.
+This will result in an array for each set of labels provided in the `availableTags` object array.
 
 ```js
   var result = {
-    hastags: ['tag1','tag2'],
+    hastags: ['tag1', 'tag2'],
     originalText: "#tag1 #tag2"
   }
 ```
@@ -80,8 +80,8 @@ To use the SuperTags package, the `Activate` method (see Usage below) must be ca
 
 ```js
 var settings {
-  inputTemplate: "blazeTemplateName", //Blaze template to attach events and helpers
-  inputControl: "divIdForTagField" //Div Id for tag input
+  inputTemplate: 'blazeTemplateName',  // Blaze template to attach events and helpers
+  inputControl: 'divIdForTagField'  // div Id for tag input
 }
 ```
 
@@ -89,16 +89,16 @@ var settings {
 
 SuperTags has two modes for entering tags:
 
-* Tag Box - Provides an input box for users to enter in one or more tags. This is the default mode and good for collecting tags on forms, etc. The user can only enter tags in this mode.
+* `tagBox` - Provides an input box for users to enter in one or more tags. This is the default mode and good for collecting tags on forms, etc. The user can only enter tags in this mode.
 
-* Inline - Similar to how twitter does hashtags, users can intermix text and tags in this mode. Tags must be tokenized with a symbol (e.g. #).
+* `inline` - Similar to how Twitter does hashtags, users can intermix text and tags in this mode. Tags must be tokenized with a symbol (e.g. `#`).
 
 The default Tag Mode is 'tagBox', but it can also be set in the settings object:
 
 ```js
 var settings = {
   ...
-  tagMode: 'tagBox' //available options are: 'tagBox' or 'inline'
+  tagMode: 'tagBox'  // available options are: 'tagBox' or 'inline'
 }
 ```
 
@@ -110,7 +110,7 @@ SuperTags makes it easy to add additional CSS classes to each tag. This allows t
 var settings = {
   ...
   tagCss: {
-    additionalTagClasses: "class1 class2" //space delimited string of css classes
+    additionalTagClasses: 'class1 class2'  // space-delimited string of CSS classes
   }
 }
 ```
@@ -122,7 +122,7 @@ SuperTags allows the application to adjust which key events trigger a new tag cr
 ```js
 var settings = {
   ...
-  submitKeys: [13, 9 , 32]
+  submitKeys: [13, 9, 32]  // add 'space'
 }
 ```
 
@@ -133,37 +133,37 @@ Hashtags and mentions are the most popular tokenized tags, but SuperTags allows 
 ```js
 var settings = {
   availableTags: [{
-    label: "hashtag",
-    token: "#",          //token to denote a tag within text
+    label: 'hashtag',
+    token: '#',          //token to denote a tag within text
     css: {
-      classes: "class1 class2" //space delimited string of css classes
+      classes: 'class1 class2'  // space-delimited string of CSS classes
     }
   }, {
-    label: "mention",
-    token: "@"
+    label: 'mention',
+    token: '@'
   }]
 }
 ```
 
 ### Autocomplete Settings
 
-SuperTags has a builtin autocomplete feature that allows the user to pick from a pre-determined list of tags. Simply provide an array or collection in the settings object (see below) and it will be presented to the user on input. For collections, additional filters can be provided, which is especially useful in the case of `inline` mode.
+SuperTags has a built-in autocomplete feature that allows the user to pick from a pre-determined list of tags. Simply provide an array or collection in the settings object (see below) and it will be presented to the user on input. For collections, additional filters can be provided, which is especially useful in the `inline` mode.
 
-In `tagBox` mode the user can choose from a single list. In `inline` mode, the user can choose from one list per tokenized tag.
+In `tagBox` mode, the user can choose from a single list. In `inline` mode, the user can choose from one list per tokenized tag.
 
-The settings object can accept a global `autocomplete` key on settings object or an `autocomplete` key for each tokenized tag.
+The settings object can accept a global `autocomplete` key, or an `autocomplete` key for each tokenized tag.
 
 Global autocomplete example:
 
 ```js
 var settings = {
   autocomplete: {
-    data: collectionName, //accepts an array or collection name
-    displayField: "fieldName", //field display in autocomplete list (required for collections)
-    lookupField: "fieldName", //field to filter on as typing (required for collections)
-    itemTemplate: itemTemplateName, //(optional) customize how each item is displayed
-    limit: 5, //(optional) limit the number of items displayed at one time
-    filter: {key: 'value'}  //(optional) provides additional filtering for collections
+    data: collectionName,  // accepts an array or collection name
+    displayField: 'fieldName',  // field display in autocomplete list (required for collections)
+    lookupField: 'fieldName',  // field to filter on as typing (required for collections)
+    itemTemplate: itemTemplateName,  // (optional) customize how each item is displayed
+    limit: 5,  // (optional) limit the number of items displayed at one time
+    filter: {key: 'value'}  // (optional) provides additional filtering for collections
   }
 }
 ```
@@ -174,15 +174,15 @@ Autocomplete for tokenized tags:
 var settings = {
   ...
   availableTags: [{
-    label: "hashtag",
-    token: "#",
+    label: 'hashtag',
+    token: '#',
     autocomplete: {
-      data: collectionName, //accepts an array or collection name
-      displayField: "fieldName", //field display in autocomplete list (required for collections)
-      lookupField: "fieldName", //field to filter on as typing (required for collections)
-      itemTemplate: itemTemplateName, //(optional) customize how each item is displayed
-      limit: 5, //(optional) limit the number of items displayed at one time
-      filter: {key: 'value'}  //(optional) provides additional filtering for collections
+      data: collectionName,  // accepts an array or collection name
+      displayField: 'fieldName',  // field display in autocomplete list (required for collections)
+      lookupField: 'fieldName',  // field to filter on as typing (required for collections)
+      itemTemplate: itemTemplateName,  // (optional) customize how each item is displayed
+      limit: 5,  // (optional) limit the number of items displayed at one time
+      filter: {key: 'value'}  // (optional) provides additional filtering for collections
     }
   }]
 }
@@ -194,13 +194,13 @@ TODO
 
 ### Mongo Document Tagging Settings
 
-In some cases, a document might already exist in MongoDB that needs to be tagged. SuperTags can manage this, if given the collection name of which to interact with and a document id. The tags are added to the provided mongo document as a field of type object. The settings to enable this functionality are below:
+In some cases, a document might already exist in MongoDB that needs to be tagged. SuperTags can manage this, if given the name of the collection to interact with and a document id. The tags are added to the provided Mongo document as a field of type `object`. The settings to enable this functionality are below:
 
 ```js
 var settings = {
-  itemCollection: collection, //the name of the collection
+  itemCollection: collection,  // the name of the collection
   availableTags: [{
-    label: "hashtag"
+    label: 'hashtag'
   }]
 }
 ```
@@ -215,38 +215,38 @@ superTags = new SuperTags.Activate(settings);
 
 The returned ``superTags`` variable will have the following methods:
 
-* parseAllTags (text) //runs parse tags across all tag controllers
-* parseAllTagsFromObject (object, fieldName) //fieldName is optional if parseField is provided in settings
-* applyAllTags (object, fieldName) //fieldName is optional if parseField is provided in settings
+* parseAllTags(text)  // runs parse tags across all tag controllers
+* parseAllTagsFromObject(object, fieldName)  // fieldName is optional if parseField is provided in settings
+* applyAllTags(object, fieldName)  // fieldName is optional if parseField is provided in settings
 
 In general, parsing tags from a string or object will both return and store the tags in the specific instance of SuperTags. Once the tags are applied (e.g. applyAllTags), the tags are cleared from the instance.
 
 Examples:
 
 ```js
-var parsedTags = superTags.parseAllTags("this is my #sample text");
+var parsedTags = superTags.parseAllTags('this is my #sample text');
 
-//Output for parsedTags
-{originalText: "this is my #sample text", modifiedText: "this is my #sample text", hashtag: ["sample"]}
+// Output for parsedTags
+{originalText: 'this is my #sample text', modifiedText: 'this is my #sample text', hashtag: ['sample']}
 ```
 
 ```js
-var parsedObj = superTags.parseAllTagsFromObject({text: "this is my #sample text"}, "text");
+var parsedObj = superTags.parseAllTagsFromObject({text: 'this is my #sample text'}, 'text');
 
-//Output for parsedObj
-{originalObj: {text: "this is my #sample text"}, modifiedObj: {text: "this is my #sample text"}, hashtag: ["sample"]}
+// Output for parsedObj
+{originalObj: {text: 'this is my #sample text'}, modifiedObj: {text: 'this is my #sample text'}, hashtag: ['sample']}
 ```
 
 ```js
-var applyAllTags = superTags.applyAllTags({text: "this is my #sample text"}, "text")
+var applyAllTags = superTags.applyAllTags({text: 'this is my #sample text'}, 'text');
 
-//Output for applyAllTags
-{text: "this is my #sample text", hashtag: ["sample"]}
+// Output for applyAllTags
+{text: 'this is my #sample text', hashtag: ['sample']}
 ```
 
-In addition, each tag label is available off the ``supertags`` object as a tag controller, in the case only a single group of tags needs to be interacted with.
+In addition, each tag label is available off the `supertags` object as a tag controller, in the case only a single group of tags needs to be interacted with.
 
-Example (assuming ```hashtag``` was the label passed in from settings):
+Example (assuming `hashtag` was the label passed in from settings):
 
 ```js
 supertags.hashtag
@@ -256,31 +256,30 @@ supertags.hashtag
 
 Each tag controller has two main functions:
 
-* parseTags (text, options)
-* tagItem (item, additionalTags)
+* parseTags(text, options)
+* tagItem(item, additionalTags)
 
-The tagItem function must be called after the parseTags function, as the tags are provided by the parse function.
+The `tagItem` function must be called after the `parseTags` function, as the tags are provided by the parse function.
 
 Example:
 
 ```js
-//parses and stores the 'sample' hashtag on the instance 'superTags'
-var tags = superTags.hashtag.parseTags("this is my #sample text");
+// Parses and stores the 'sample' hashtag on the instance 'superTags'
+var tags = superTags.hashtag.parseTags('this is my #sample text');
 
-//applies the parsed tags from the previous line to the object provided
-var taggedObject = superTags.hashtag.tagItem({sample: "item"});
+// Applies the parsed tags from the previous line to the object provided
+var taggedObject = superTags.hashtag.tagItem({sample: 'item'});
 
-//Output for tags
-{originalText: "this is my #sample text", modifiedText: "this is my #sample text", hashtag: ["sample"]}
+// Output for tags
+{originalText: 'this is my #sample text', modifiedText: 'this is my #sample text', hashtag: ['sample']}
 
-//Output for taggedObject
-{sample: "item", hashtag: ["sample"]}
-
+// Output for taggedObject
+{sample: 'item', hashtag: ['sample']}
 ```
 
 ### Tag Mongo Controller
 
-Each tag controller also has a mongo controller available to it. This allows for each tag management of documents already stored within MongoDB.
+Each tag controller also has a Mongo controller available to it. This allows for tag management of documents already stored within MongoDB.
 
 ```js
 superTags.hashtag.mongoController
@@ -288,21 +287,21 @@ superTags.hashtag.mongoController
 
 Mongo controllers have the following functions:
 
-* addTagToDoc (docId, docTag, callback)
+* addTagToDoc(docId, docTag, callback)
 * removeTagFromDoc(docId, docTag, callback);
 
-In both addTagToDoc and removeTagFromDoc, either a single tag (string) or an array of tags ([strings]) can be passed in.
+In both `addTagToDoc` and `removeTagFromDoc`, either a single tag (string) or an array of tags ([strings]) can be passed in.
 
 Examples:
 
 ```js
-//a field called 'hashtag' will be added to the MongoDB document containing an array of tags
-superTags.hashtag.mongoController.addTagToDoc(docId, ["tag1", "tag2", "tag3"])
+// A field called 'hashtag' will be added to the MongoDB document containing an array of tags
+superTags.hashtag.mongoController.addTagToDoc(docId, ['tag1', 'tag2', 'tag3']);
 ```
 
 ```js
-//a field called 'hashtag' will be modified and the strings will be removed from the array
-superTags.hashtag.mongoController.removeTagFromDoc(docId, ["tag1", "tag2", "tag3"])
+// A field called 'hashtag' will be modified and the strings will be removed from the array
+superTags.hashtag.mongoController.removeTagFromDoc(docId, ['tag1', 'tag2', 'tag3']);
 ```
 
 ## Events
@@ -312,9 +311,9 @@ SuperTags is built with ClassX and thus has a full event system built in. This i
 To subscribe to events within SuperTags:
 
 ```js
-SuperTags.addEventListener("tag", function(data) {
+SuperTags.addEventListener('tag', function (data) {
 
-})
+});
 ```
 
 The data parameter has the following properties and possible values:
@@ -323,19 +322,19 @@ The data parameter has the following properties and possible values:
 data: {
   callee: controller, mongoController
   action: tagAdded, tagRemoved, newTagParsed, newTagSaved
-  label: //the label responsible for triggering (e.g. hashtag, mention)
-  tags: //tags that were added, remove, parsed or saved
+  label:  // the label responsible for triggering (e.g. hashtag, mention)
+  tags:  // tags that were added, remove, parsed or saved
 }
 ```
 
 ## Template Helpers
 
-SuperTags utilizes the mizzao:autocomplete template helpers and also provides some additional helpers to make it easier to deal with tags.
+SuperTags utilizes the [mizzao:autocomplete](https://atmospherejs.com/mizzao/autocomplete) template helpers and also provides some additional helpers to make it easier to deal with tags.
 
 
 ### Tag Highlighting
 
-SuperTags also makes it easy to highlight tags with a specific color. The object must have tags added by SuperTags to be highlighted. The text is not parsed directly, the tags are replaced with highlighted spans.
+SuperTags also makes it easy to highlight tags with a specific color. The object must have tags added by SuperTags to be highlighted. The text is not parsed directly, rather the tags are replaced with highlighted `<span>`s.
 
 Example:
 
@@ -356,18 +355,18 @@ Example:
 ```html
 <template name="templateName">
   {{#each taggedItems}}
-    <div class='taggedItem' {{supertagsdata}} >
+    <div class="taggedItem" {{supertagsdata}}>
     </div>
   {{/each}}
 </template>
 ```
-The ``supertagsdata`` helper will provide an attribute for each tag label provided in the settings.
+The `supertagsdata` helper will provide an attribute for each tag label provided in the settings.
 
 Example of Results:
 
 ```html
 <template name="templateName">
-  <div class='taggedItem' hashtag='#sample'>
+  <div class="taggedItem" hashtag="#sample">
   </div>
 </template>
 ```
